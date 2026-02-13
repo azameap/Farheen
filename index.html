@@ -1,116 +1,174 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Important Diagnosis</title>
-
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-
-    <!-- Confetti -->
+    <meta charset="UTF-8">
+    <title>Official Medical Consultation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Courier+Prime&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
         body {
-            text-align: center;
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to right, #ff4e50, #fc913a);
-            margin-top: 120px;
-            color: white;
+            background: #f4f7f6; /* Professional clean medical look */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .prescription-card {
+            background: white;
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 500px;
+            border-top: 15px solid #00796b; /* Medical Teal */
+            position: relative;
+        }
+
+        .rx-symbol {
+            font-family: 'Courier Prime', monospace;
+            font-size: 50px;
+            color: #00796b;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            opacity: 0.2;
         }
 
         h1 {
-            font-size: 32px;
+            font-size: 22px;
+            color: #00796b;
+            margin-bottom: 25px;
+            min-height: 1.2em;
         }
 
-        .report {
-            background: rgba(255,255,255,0.1);
+        .medical-details {
+            text-align: left;
+            font-family: 'Courier Prime', monospace;
+            background: #fafafa;
             padding: 20px;
-            border-radius: 15px;
-            width: 60%;
-            margin: auto;
-            margin-bottom: 30px;
+            border: 1px dashed #ccc;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .label { font-weight: bold; color: #555; }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
         }
 
         button {
-            padding: 15px 30px;
-            font-size: 18px;
-            margin: 20px;
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 600;
             border: none;
-            border-radius: 10px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
         }
 
         #yesBtn {
-            background-color: #00c853;
+            background-color: #00796b;
             color: white;
         }
+
+        #yesBtn:hover { background-color: #004d40; transform: scale(1.05); }
 
         #noBtn {
-            background-color: #d50000;
+            background-color: #ef5350;
             color: white;
         }
+
+        .success-msg {
+            color: #00796b;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
-
 <body>
 
-<h1 id="question"></h1>
+<div class="prescription-card" id="mainCard">
+    <div class="rx-symbol">Rx</div>
+    <h1 id="question"></h1>
 
-<div class="report">
-    🩺 Medical Report<br><br>
-    Patient: Me 😌<br>
-    Symptoms: Increased heartbeat when you’re around ❤️<br>
-    Diagnosis: Acute Valentine Syndrome 💘<br>
-    Recommended Treatment: Become my Valentine
+    <div class="medical-details">
+        <div><span class="label">PATIENT:</span> Mohammad Azam Bhat</div>
+        <div><span class="label">CHIEF COMPLAINT:</span> Acute Tachycardia & persistent distraction.</div>
+        <hr>
+        <div><span class="label">CLINICAL FINDINGS:</span> Patient shows systemic "butterfly" activity in the gastric region and a complete inability to focus on bank spreadsheets when thinking of the attending Physician.</div>
+        <br>
+        <div><span class="label">DIAGNOSIS:</span> Chronic Valentine Deficiency (CVD-2026).</div>
+        <br>
+        <div><span class="label">RX:</span> One candlelit dinner. Dosage: Feb 14th. Refills: Unlimited.</div>
+    </div>
+
+    <div class="btn-container">
+        <button id="yesBtn">Approve Treatment 💊</button>
+        <button id="noBtn">Refer to Specialist 🚑</button>
+    </div>
 </div>
 
-<button id="yesBtn">Approve Treatment 💊</button>
-<button id="noBtn">Refer to Another Doctor 🚑</button>
-
 <script>
+    const yesButton = document.getElementById("yesBtn");
+    const noButton = document.getElementById("noBtn");
+    const questionEl = document.getElementById("question");
 
-    let yesButton = document.getElementById("yesBtn");
-    let noButton = document.getElementById("noBtn");
-
-    // Typing effect
-    let text = "Dr., will you be my Valentine? 💘";
+    // Typing effect for the Doctor
+    let text = "Doctor, will you be my Valentine?";
     let i = 0;
 
     function typeWriter() {
         if (i < text.length) {
-            document.getElementById("question").innerHTML += text.charAt(i);
+            questionEl.innerHTML += text.charAt(i);
             i++;
-            setTimeout(typeWriter, 60);
+            setTimeout(typeWriter, 50);
         }
     }
 
-    typeWriter();
+    window.onload = typeWriter;
 
-    // No button runs away
+    // No button runs away - modified for better boundaries
     noButton.addEventListener("mouseover", function() {
-        let x = Math.random() * (window.innerWidth - 100);
-        let y = Math.random() * (window.innerHeight - 100);
+        const padding = 50;
+        let x = Math.random() * (window.innerWidth - noButton.offsetWidth - padding);
+        let y = Math.random() * (window.innerHeight - noButton.offsetHeight - padding);
 
-        noButton.style.position = "absolute";
+        noButton.style.position = "fixed";
         noButton.style.left = x + "px";
         noButton.style.top = y + "px";
+        noButton.innerText = "Error: Specialist Unavailable";
     });
 
     // Yes button celebration
     yesButton.addEventListener("click", function() {
         confetti({
-            particleCount: 200,
-            spread: 100
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#00796b', '#ff4081', '#ffffff']
         });
 
-        document.body.innerHTML = `
-            <h1>Diagnosis Confirmed 💘</h1>
-            <p>The patient is now officially your Valentine ❤️</p>
-            <p>No further medication required 😌</p>
+        document.getElementById("mainCard").innerHTML = `
+            <div class="success-msg">
+                <h1 style="font-size: 40px;">✅ Treatment Confirmed</h1>
+                <p style="font-family: 'Courier Prime';">The patient is already feeling 100% better.</p>
+                <p style="font-family: 'Courier Prime';">See you on the 14th, Dr. ❤️</p>
+                <br>
+                <div style="font-size: 50px;">☕️ + 🍽️</div>
+            </div>
         `;
     });
-
 </script>
 
 </body>
