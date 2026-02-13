@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Important Question</title>
+    <title>Important Diagnosis</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- Confetti Library -->
+    <!-- Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
         body {
             text-align: center;
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            background: linear-gradient(to right, #ff4e50, #fc913a);
             margin-top: 120px;
+            color: white;
         }
 
         h1 {
             font-size: 32px;
+        }
+
+        .report {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            width: 60%;
+            margin: auto;
+            margin-bottom: 30px;
         }
 
         button {
@@ -32,12 +42,12 @@
         }
 
         #yesBtn {
-            background-color: #4CAF50;
+            background-color: #00c853;
             color: white;
         }
 
         #noBtn {
-            background-color: #f44336;
+            background-color: #d50000;
             color: white;
         }
     </style>
@@ -47,22 +57,31 @@
 
 <h1 id="question"></h1>
 
-<button id="yesBtn">Yes</button>
-<button id="noBtn">No</button>
+<div class="report">
+    🩺 Medical Report<br><br>
+    Patient: Me 😌<br>
+    Symptoms: Increased heartbeat when you’re around ❤️<br>
+    Diagnosis: Acute Valentine Syndrome 💘<br>
+    Recommended Treatment: Become my Valentine
+</div>
+
+<button id="yesBtn">Approve Treatment 💊</button>
+<button id="noBtn">Refer to Another Doctor 🚑</button>
 
 <script>
+
     let yesButton = document.getElementById("yesBtn");
     let noButton = document.getElementById("noBtn");
 
-    // Typing Effect
-    let text = "Will you be my cousin sister? 💖";
+    // Typing effect
+    let text = "Dr., will you be my Valentine? 💘";
     let i = 0;
 
     function typeWriter() {
         if (i < text.length) {
             document.getElementById("question").innerHTML += text.charAt(i);
             i++;
-            setTimeout(typeWriter, 70);
+            setTimeout(typeWriter, 60);
         }
     }
 
@@ -80,8 +99,16 @@
 
     // Yes button celebration
     yesButton.addEventListener("click", function() {
-        confetti();
-        document.body.innerHTML = "<h1>Yayyyy! Officially my cousin sister now 💕✨</h1>";
+        confetti({
+            particleCount: 200,
+            spread: 100
+        });
+
+        document.body.innerHTML = `
+            <h1>Diagnosis Confirmed 💘</h1>
+            <p>The patient is now officially your Valentine ❤️</p>
+            <p>No further medication required 😌</p>
+        `;
     });
 
 </script>
