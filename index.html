@@ -2,16 +2,23 @@
 <html>
 <head>
     <title>Important Question</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     <style>
         body {
             text-align: center;
-            font-family: Arial, sans-serif;
-            background-color: #ffe6f0;
-            margin-top: 100px;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            margin-top: 120px;
         }
 
         h1 {
-            font-size: 30px;
+            font-size: 32px;
         }
 
         button {
@@ -35,29 +42,49 @@
         }
     </style>
 </head>
+
 <body>
 
-    <h1>Will you be my cousin sister? 💖</h1>
+<h1 id="question"></h1>
 
-    <button id="yesBtn">Yes</button>
-    <button id="noBtn">No</button>
+<button id="yesBtn">Yes</button>
+<button id="noBtn">No</button>
 
-    <script>
-        let yesButton = document.getElementById("yesBtn");
-        let noButton = document.getElementById("noBtn");
+<script>
+    let yesButton = document.getElementById("yesBtn");
+    let noButton = document.getElementById("noBtn");
 
-        let size = 18;
+    // Typing Effect
+    let text = "Will you be my cousin sister? 💖";
+    let i = 0;
 
-        noButton.addEventListener("click", function() {
-            size += 10;
-            yesButton.style.fontSize = size + "px";
-            yesButton.style.padding = (size / 2) + "px " + (size) + "px";
-        });
+    function typeWriter() {
+        if (i < text.length) {
+            document.getElementById("question").innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typeWriter, 70);
+        }
+    }
 
-        yesButton.addEventListener("click", function() {
-            alert("Yayyy! You are officially my cousin sister now! 💕✨");
-        });
-    </script>
+    typeWriter();
+
+    // No button runs away
+    noButton.addEventListener("mouseover", function() {
+        let x = Math.random() * (window.innerWidth - 100);
+        let y = Math.random() * (window.innerHeight - 100);
+
+        noButton.style.position = "absolute";
+        noButton.style.left = x + "px";
+        noButton.style.top = y + "px";
+    });
+
+    // Yes button celebration
+    yesButton.addEventListener("click", function() {
+        confetti();
+        document.body.innerHTML = "<h1>Yayyyy! Officially my cousin sister now 💕✨</h1>";
+    });
+
+</script>
 
 </body>
 </html>
